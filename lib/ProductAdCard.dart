@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
 import 'CustomIcons.dart';
+import 'OneProduct.dart';
 
+class Product {
+  Product(this.name, this.price, this.img);
+  final String name;
+  final String price;
+  final String img;
+
+  Map<String, dynamic> toJson() =>
+      {'name': name, 'price': price, 'img': img, 'description': ""};
+}
 
 class ProductCardAd extends StatelessWidget {
   String img;
   String price;
   String name;
 
-  ProductCardAd( this.name, this.img, this.price);
+  ProductCardAd(this.name, this.img, this.price);
+
+  Color iconColor = Colors.black;
+
+  Icon _affectedByStateChange = new Icon(
+    Icons.thumb_up,
+    color: Colors.grey,
+  );
+  _thisWillAffectTheState() {
+    _affectedByStateChange = new Icon(CustomIcons.favorite, color: Colors.red);
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Container(
+        child: Padding(
+      padding: const EdgeInsets.only(top: 20.0, bottom: 10),
+      child: Container(
         width: double.infinity,
         height: 320,
         decoration: BoxDecoration(
@@ -27,8 +50,7 @@ class ProductCardAd extends StatelessWidget {
               borderRadius: new BorderRadius.circular(20.0),
               child: Image.asset(img, width: 290.0, height: 191.0),
             ),
-            Text(name,
-                style: TextStyle(fontSize: 25.0, fontFamily: "Raleway")),
+            Text(name, style: TextStyle(fontSize: 25.0, fontFamily: "Raleway")),
             SizedBox(
               height: 15.0,
             ),
@@ -38,8 +60,13 @@ class ProductCardAd extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(CustomIcons.favorite),
-                    onPressed: () {},
+                    icon: Icon(
+                      CustomIcons.favorite,
+                      color: iconColor,
+                    ),
+                    onPressed: () {
+                      this.iconColor = Colors.red;
+                    },
                   ),
                   Column(
                     children: <Widget>[
@@ -58,12 +85,21 @@ class ProductCardAd extends StatelessWidget {
                   ),
                   IconButton(
                     icon: Icon(CustomIcons.cart),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                (OneProduct(this.name, this.img, this.price))),
+                      );
+                    },
                   )
                 ],
               ),
-            )
+            ),
           ],
-        ));
+        ),
+      ),
+    ));
   }
 }

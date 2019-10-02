@@ -6,10 +6,12 @@ import 'ProductPage.dart';
 import 'LoginPage.dart';
 import 'file.dart';
 import 'ProductPage2.dart';
+import 'AddNewProduct.dart';
 
 void main() => runApp(MaterialApp(
       home: LoginPage(),
       routes: <String, WidgetBuilder> {
+        "/AddNewProduct":(BuildContext context) => new AddNewProduct(),
         "/ProductPage": (BuildContext context) => new ProductPage2(),
       },
       debugShowCheckedModeBanner: false,

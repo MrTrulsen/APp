@@ -6,6 +6,12 @@ import 'ProductPage.dart';
 import 'LoginPage.dart';
 
 class OneProduct extends StatelessWidget {
+  String img;
+  String price;
+  String name;
+
+  OneProduct(this.name, this.img, this.price);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +21,7 @@ class OneProduct extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: new Column(
               children: <Widget>[
                 Align(
@@ -25,16 +31,13 @@ class OneProduct extends StatelessWidget {
                     child: IconButton(
                       icon: Icon(Icons.arrow_back),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ProductPage()),
-                        );
+                        Navigator.of(context).pushNamed("/ProductPage");
                       },
                     ),
                   ),
                 ),
                 Align(
-                  alignment: Alignment.topRight,
+                  alignment: Alignment.center,
                   child: Padding(
                     padding: EdgeInsets.only(top: 0.0, bottom: 25.0),
                     child: Image.asset("images/86489.png",
@@ -42,8 +45,8 @@ class OneProduct extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                    child: new OneProductAd(0xFFd5d5d5, "Lamborghini",
-                        "images/bil2.jpg", "2000000", "998999"),
+                    child: new OneProductAd(0xFFd5d5d5, name,
+                        img, price),
                     onDoubleTap: () => print("To be ")),
               ],
             ),
@@ -62,7 +65,7 @@ class OneProduct extends StatelessWidget {
             children: bottomNavIconList.map((item) {
               return Expanded(
                   child: GestureDetector(
-                onTap: () {},
+                onTap: () {Navigator.of(context).pushNamed("/ProductPage");},
                 child: item,
               ));
             }).toList(),
@@ -74,18 +77,17 @@ class OneProduct extends StatelessWidget {
 class OneProductAd extends StatelessWidget {
   int cardColor;
   String imgUrl;
-  String previousPrice;
   String price;
   String title;
 
   OneProductAd(
-      this.cardColor, this.title, this.imgUrl, this.previousPrice, this.price);
+      this.cardColor, this.title, this.imgUrl, this.price);
 
   @override
   Widget build(BuildContext context) {
     return new Container(
       width: double.infinity,
-      height: 450,
+      height: 400,
       decoration: BoxDecoration(
           color: Color(cardColor),
           borderRadius: BorderRadius.circular(20.0),
@@ -103,17 +105,15 @@ class OneProductAd extends StatelessWidget {
           SizedBox(
             height: 15.0,
           ),
-          Text("NOK " + previousPrice,
-              style: TextStyle(fontSize: 16.0, color: Color(0xFFe5a900))),
           SizedBox(
-            height: 15.0,
+            height: 25.0,
           ),
           Text("NOK " + price,
               style: TextStyle(
                 fontSize: 25.0,
               )),
           SizedBox(
-            height: 20.0,
+            height: 45.0,
           ),
           RaisedButton(
               onPressed: () {

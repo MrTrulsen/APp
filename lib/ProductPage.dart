@@ -53,22 +53,22 @@ class ProductPage extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                    child: new ProductCardAd("Lamborghini",
-                        "images/bil2.jpg", "998999"),
+                    // child: new ProductCardAd("Lamborghini",
+                    //     "images/bil2.jpg", "998999"),
                     onDoubleTap: () => fetchData()),
                 SizedBox(
                   height: 32.0,
                 ),
                 GestureDetector(
-                    child: new ProductCardAd("Mclaren",
-                        "images/bil3.jpg", "998999"),
+                    // child: new ProductCardAd("Mclaren",
+                    //     "images/bil3.jpg", "998999"),
                     onDoubleTap: () => print("To be")),
                 SizedBox(
                   height: 32.0,
                 ),
                 GestureDetector(
-                    child: new ProductCardAd("Lamborghini",
-                        "images/bil4.jpg", "998999"),
+                    // child: new ProductCardAd("Lamborghini",
+                    //     "images/bil4.jpg", "998999"),
                     onDoubleTap: () => print("To be")),
                 SizedBox(
                   height: 32.0,
@@ -84,10 +84,6 @@ class ProductPage extends StatelessWidget {
         elevation: 3,
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => (OneProduct())),
-          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

@@ -18,13 +18,14 @@ class ProductPage2 extends StatelessWidget {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final formatResponseTest = "{" + "\"products\":" + response.body + "}";
-    
+
       final jsondata = json.decode(formatResponseTest);
 
       final productsJson = jsondata["products"];
       print(productsJson);
       for (var u in productsJson) {
-        ProductCardAd ad = ProductCardAd(u["name"], u["img"], u["price"]);
+        ProductCardAd ad =
+            ProductCardAd(u["name"], "images/" + u["img"] + ".jpg", u["price"]);
         products.add(ad);
       }
       thisProducts = products;
@@ -33,68 +34,64 @@ class ProductPage2 extends StatelessWidget {
     }
   }
 
+  Widget getListOfProducts() {
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: FutureBuilder(
+          future: getProducts(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return new Container(
+                  width: 0.0,
+                  height: 0.0,
+                  child: Center(
+                    child: Text("Loading"),
+                  ));
+            } else {
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: this.thisProducts.length+1,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  if(index == 0){
+                    return new Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 30.0, bottom: 0.0),
+                    child: Image.asset("images/86489.png",
+                        width: 62.0, height: 43.0),
+                  ));
+                  }
+                  index -= 1;
+                  final product = thisProducts[index];
+                  return thisProducts[index];
+                },
+              );
+              
+            }
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.white,
-      body: new ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
-            child: new Column(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 30.0, bottom: 25.0),
-                    child: Image.asset("images/86489.png",
-                        width: 62.0, height: 43.0),
-                  ),
-                ),
-                Container(
-                  child: FutureBuilder(
-                    future: getProducts(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.data == null) {
-                        return new Container(
-                            width: 0.0,
-                            height: 0.0,
-                            child: Center(
-                              child: Text("Loading"),
-                            ));
-                      } else {
-                        new ListView.builder(
-                          itemCount: thisProducts != null ? this.thisProducts.length : 0,
-                          itemBuilder: (context, i) {
-                            return new Column(
-                              children: <Widget>[new Text("$i"), 
-                              new Divider(),
-                              ],
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
+      body: Container(
+      child: getListOfProducts(),
       ),
+      //child: getListOfProducts(),
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.black,
         backgroundColor: Color(0xFFe5a900),
         elevation: 3,
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => (OneProduct())),
-          );
-        },
+          Navigator.of(context).pushNamed("/AddNewProduct");
+        }, //         child: getListOfProducts(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: Container(
@@ -109,7 +106,7 @@ class ProductPage2 extends StatelessWidget {
             children: bottomNavIconList.map((item) {
               return Expanded(
                   child: GestureDetector(
-                onTap: () {},
+                onTap: () {Navigator.of(context).pushNamed("/ProductPage");},
                 child: item,
               ));
             }).toList(),
@@ -117,7 +114,6 @@ class ProductPage2 extends StatelessWidget {
     );
   }
 }
-
 
 List<Widget> bottomNavIconList = [
   Icon(
