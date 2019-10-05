@@ -3,7 +3,6 @@ import 'CustomIcons.dart';
 import 'ProductAdCard.dart';
 import 'my_flutter_app_icons.dart';
 import 'ProductPage.dart';
-import 'file.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'ProductAdCard.dart';

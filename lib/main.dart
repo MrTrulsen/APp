@@ -4,7 +4,6 @@ import 'ProductAdCard.dart';
 import 'my_flutter_app_icons.dart';
 import 'ProductPage.dart';
 import 'LoginPage.dart';
-import 'file.dart';
 import 'ProductPage2.dart';
 import 'AddNewProduct.dart';
 

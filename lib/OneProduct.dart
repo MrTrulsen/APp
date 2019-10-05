@@ -4,6 +4,7 @@ import 'ProductAdCard.dart';
 import 'my_flutter_app_icons.dart';
 import 'ProductPage.dart';
 import 'LoginPage.dart';
+import 'Services.dart';
 
 class OneProduct extends StatelessWidget {
   String img;
@@ -16,60 +17,27 @@ class OneProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Color(0xFFe5a900),
+        centerTitle: true,
+        title: Text("FantApp"),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(8),
         children: <Widget>[
           Padding(
             padding:
-            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: new Column(
               children: <Widget>[
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 0.0),
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed("/ProductPage");
-                      },
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 0.0, bottom: 25.0),
-                    child: Image.asset("images/86489.png",
-                        width: 62.0, height: 43.0),
-                  ),
-                ),
                 GestureDetector(
-                    child: new OneProductAd(0xFFd5d5d5, name,
-                        img, price),
+                    child: new OneProductAd(0xFFd5d5d5, name, img, price),
                     onDoubleTap: () => print("To be ")),
               ],
             ),
           )
         ],
       ),
-      bottomNavigationBar: Container(
-          height: 70.0,
-          decoration: BoxDecoration(color: Color(0xFFe5a900), boxShadow: [
-            BoxShadow(
-                color: Colors.black12.withOpacity(0.065),
-                offset: Offset(0.0, -3.0),
-                blurRadius: 10.0)
-          ]),
-          child: Row(
-            children: bottomNavIconList.map((item) {
-              return Expanded(
-                  child: GestureDetector(
-                onTap: () {Navigator.of(context).pushNamed("/ProductPage");},
-                child: item,
-              ));
-            }).toList(),
-          )),
     );
   }
 }
@@ -80,8 +48,7 @@ class OneProductAd extends StatelessWidget {
   String price;
   String title;
 
-  OneProductAd(
-      this.cardColor, this.title, this.imgUrl, this.price);
+  OneProductAd(this.cardColor, this.title, this.imgUrl, this.price);
 
   @override
   Widget build(BuildContext context) {
@@ -117,10 +84,8 @@ class OneProductAd extends StatelessWidget {
           ),
           RaisedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProductPage()),
-                );
+                Services.deleteProduct(this.title);
+                Navigator.of(context).pushNamed("/ProductPage");
               },
               color: Color(0xFFe5a900),
               textColor: Colors.black,

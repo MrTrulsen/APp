@@ -5,32 +5,51 @@ import 'my_flutter_app_icons.dart';
 import 'OneProduct.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'Services.dart';
 
-class ProductPage2 extends StatelessWidget {
-  var _isLoading = true;
-  final products = [];
-  var thisProducts;
+class ProductPage2 extends StatefulWidget {
+  ProductPage2() : super();
 
-  Future<List<ProductCardAd>> getProducts() async {
-    print("Attemting to fetch data from network");
-    List<ProductCardAd> products = [];
-    final url = "http://192.168.1.101:8080/jakarta-template/api/ad/getallads";
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final formatResponseTest = "{" + "\"products\":" + response.body + "}";
+  @override
+  ProductAdPage createState() => ProductAdPage();
+}
 
-      final jsondata = json.decode(formatResponseTest);
+class ProductAdPage extends State<ProductPage2> {
+  List<ProductCardAd> products = List();
+  List<ProductCardAd> filteredProducts = List();
+  bool searching = false;
+  Icon searchIcon = Icon(Icons.search);
 
-      final productsJson = jsondata["products"];
-      print(productsJson);
-      for (var u in productsJson) {
-        ProductCardAd ad =
-            ProductCardAd(u["name"], "images/" + u["img"] + ".jpg", u["price"]);
-        products.add(ad);
-      }
-      thisProducts = products;
-      print(products);
-      return thisProducts;
+  @override
+  void initState() {
+    super.initState();
+    Services.getProducts().then((productsFromServer) {
+      setState(() {
+        products = productsFromServer;
+        filteredProducts = products;
+      });
+    });
+  }
+
+  Widget getSearchBar() {
+    if (searching == true) {
+      return TextField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(15.0),
+          hintText: "Search for product",
+        ),
+        onChanged: (string) {
+          setState(() {
+            filteredProducts = products
+                .where((u) =>
+                    (u.name.toLowerCase().contains(string.toLowerCase()) ||
+                        u.price.toLowerCase().contains(string.toLowerCase())))
+                .toList();
+          });
+        },
+      );
+    } else {
+      return Container();
     }
   }
 
@@ -38,38 +57,12 @@ class ProductPage2 extends StatelessWidget {
     return Container(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: FutureBuilder(
-          future: getProducts(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return new Container(
-                  width: 0.0,
-                  height: 0.0,
-                  child: Center(
-                    child: Text("Loading"),
-                  ));
-            } else {
-              return ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: this.thisProducts.length+1,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  if(index == 0){
-                    return new Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 30.0, bottom: 0.0),
-                    child: Image.asset("images/86489.png",
-                        width: 62.0, height: 43.0),
-                  ));
-                  }
-                  index -= 1;
-                  final product = thisProducts[index];
-                  return thisProducts[index];
-                },
-              );
-              
-            }
+        child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: filteredProducts.length,
+          shrinkWrap: true,
+          itemBuilder: (BuildContext context, int index) {
+            return filteredProducts[index];
           },
         ),
       ),
@@ -80,8 +73,37 @@ class ProductPage2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-      child: getListOfProducts(),
+      appBar: AppBar(
+        backgroundColor: Color(0xFFe5a900),
+        title: Text("FantApp"),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: searchIcon,
+            onPressed: () {
+              setState(() {
+                if (searching == false) {
+                  searchIcon = Icon(Icons.close);
+                  searching = true;
+                }
+                else{
+                  searchIcon = Icon(Icons.search);
+                  searching = false;
+                }
+              });
+            },
+          )
+        ],
+      ),
+      body: Column(
+        children: <Widget>[
+          Container(
+            child: getSearchBar(),
+          ),
+          Expanded(
+            child: getListOfProducts(),
+          )
+        ],
       ),
       //child: getListOfProducts(),
       floatingActionButton: FloatingActionButton(
@@ -91,26 +113,9 @@ class ProductPage2 extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).pushNamed("/AddNewProduct");
-        }, //         child: getListOfProducts(),
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      bottomNavigationBar: Container(
-          height: 70.0,
-          decoration: BoxDecoration(color: Color(0xFFe5a900), boxShadow: [
-            BoxShadow(
-                color: Colors.black12.withOpacity(0.065),
-                offset: Offset(0.0, -3.0),
-                blurRadius: 10.0)
-          ]),
-          child: Row(
-            children: bottomNavIconList.map((item) {
-              return Expanded(
-                  child: GestureDetector(
-                onTap: () {Navigator.of(context).pushNamed("/ProductPage");},
-                child: item,
-              ));
-            }).toList(),
-          )),
     );
   }
 }

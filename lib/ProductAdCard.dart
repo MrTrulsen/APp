@@ -12,6 +12,7 @@ class Product {
       {'name': name, 'price': price, 'img': img, 'description': ""};
 }
 
+
 class ProductCardAd extends StatelessWidget {
   String img;
   String price;

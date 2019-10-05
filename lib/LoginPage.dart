@@ -3,9 +3,13 @@ import 'CustomIcons.dart';
 import 'ProductAdCard.dart';
 import 'my_flutter_app_icons.dart';
 import 'ProductPage.dart';
-import 'file.dart';
+import 'Services.dart';
+import 'dart:async';
 
 class LoginPage extends StatelessWidget {
+  final uidController = TextEditingController();
+  final pwdController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -64,6 +68,7 @@ class LoginPage extends StatelessWidget {
                   Align(
                       alignment: Alignment.centerLeft,
                       child: TextField(
+                        controller: uidController,
                         decoration: InputDecoration(
                             hintText: "username",
                             hintStyle:
@@ -83,6 +88,7 @@ class LoginPage extends StatelessWidget {
                   Align(
                       alignment: Alignment.centerLeft,
                       child: TextField(
+                        controller: pwdController,
                         decoration: InputDecoration(
                             hintText: "Password",
                             hintStyle:
@@ -92,7 +98,13 @@ class LoginPage extends StatelessWidget {
                     height: 20.0,
                   ),
                   RaisedButton(
-                      onPressed: () { Navigator.of(context).pushNamed("/ProductPage");
+                      onPressed: () {
+                        Services.login(uidController.text, pwdController.text)
+                            .then((val) {
+                          if (val == true) {
+                            Navigator.of(context).pushNamed("/ProductPage");
+                          }
+                        });
                       },
                       color: Color(0xFFe5a900),
                       textColor: Colors.black,

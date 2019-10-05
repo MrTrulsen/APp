@@ -21,9 +21,6 @@ class ProductPage extends StatelessWidget {
 
       final map = json.decode(response.body);
       final productsJson = map["products"];
-      // map.forEach((product) {
-      //     print(product["name"]);
-      // });
       this.products = productsJson;
 
       setState() {
