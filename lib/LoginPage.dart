@@ -10,6 +10,7 @@ class LoginPage extends StatelessWidget {
   final uidController = TextEditingController();
   final pwdController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -88,6 +89,7 @@ class LoginPage extends StatelessWidget {
                   Align(
                       alignment: Alignment.centerLeft,
                       child: TextField(
+                        obscureText: true,
                         controller: pwdController,
                         decoration: InputDecoration(
                             hintText: "Password",
@@ -137,3 +139,5 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
+

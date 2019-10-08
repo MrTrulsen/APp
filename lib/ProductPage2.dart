@@ -6,6 +6,7 @@ import 'OneProduct.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'Services.dart';
+import 'LoginPage.dart';
 
 class ProductPage2 extends StatefulWidget {
   ProductPage2() : super();
@@ -85,8 +86,7 @@ class ProductAdPage extends State<ProductPage2> {
                 if (searching == false) {
                   searchIcon = Icon(Icons.close);
                   searching = true;
-                }
-                else{
+                } else {
                   searchIcon = Icon(Icons.search);
                   searching = false;
                 }
@@ -94,6 +94,47 @@ class ProductAdPage extends State<ProductPage2> {
             },
           )
         ],
+      ),
+      drawer: new Drawer(
+        child: new ListView(
+          children: <Widget>[
+            new UserAccountsDrawerHeader(
+              accountName: new Text("Ørjan T"),
+              accountEmail: new Text("orjant@gmail.com"),
+              currentAccountPicture: new GestureDetector(
+                child: new CircleAvatar(
+                  backgroundImage:
+                      new AssetImage("images/User_Avatar-04-512.png"),
+                ),
+              ),
+              decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                fit: BoxFit.fill,
+                image: new AssetImage(
+                    "images/pawel-czerwinski-IXgSpDrxsgM-unsplash.jpg"),
+              )),
+            ),
+            new ListTile(
+              title: new Text("Produkter"),
+              onTap: () {
+                Navigator.of(context).pushNamed("/ProductPage");
+              },
+            ),
+            new ListTile(
+              title: new Text("Legg til nytt produkt"),
+              onTap: () {
+                Navigator.of(context).pushNamed("/AddNewProduct");
+              },
+            ),
+            new Divider(),
+            new ListTile(
+              title: new Text("Logg ut"),
+              onTap: () {
+                Navigator.of(context).pushNamed("/LoginPage");
+              },
+            )
+          ],
+        ),
       ),
       body: Column(
         children: <Widget>[

@@ -12,6 +12,7 @@ void main() => runApp(MaterialApp(
       routes: <String, WidgetBuilder> {
         "/AddNewProduct":(BuildContext context) => new AddNewProduct(),
         "/ProductPage": (BuildContext context) => new ProductPage2(),
+        "/LoginPage": (BuildContext context) => new LoginPage(),
       },
       debugShowCheckedModeBanner: false,
     ));
