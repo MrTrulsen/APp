@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'CustomIcons.dart';
-import 'OneProduct.dart';
 
 class Product {
   Product(this.name, this.price, this.img);
@@ -84,17 +83,6 @@ class ProductCardAd extends StatelessWidget {
                               fontSize: 23.0, fontFamily: "Helvetica")),
                     ],
                   ),
-                  IconButton(
-                    icon: Icon(CustomIcons.cart),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                (OneProduct(this.name, this.img, this.price))),
-                      );
-                    },
-                  )
                 ],
               ),
             ),

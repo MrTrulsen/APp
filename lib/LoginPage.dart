@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'CustomIcons.dart';
-import 'ProductAdCard.dart';
-import 'my_flutter_app_icons.dart';
-import 'ProductPage.dart';
 import 'Services.dart';
 import 'dart:async';
 
@@ -22,7 +18,7 @@ class LoginPage extends StatelessWidget {
           new Container(
             decoration: new BoxDecoration(
                 image: new DecorationImage(
-              image: new AssetImage("images/background.jpg"),
+              image: new AssetImage("images/road2.jpg"),
               fit: BoxFit.cover,
             )),
           ),
@@ -32,7 +28,7 @@ class LoginPage extends StatelessWidget {
             height: 350.0,
             margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withOpacity(0.6),
                 borderRadius: BorderRadius.circular(8.0),
                 boxShadow: [
                   BoxShadow(
@@ -48,7 +44,7 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
               child: Column(
                 children: <Widget>[
-                  Text("Fant Login",
+                  Text("Wanderlust Login",
                       style: TextStyle(
                         fontSize: 25.0,
                         fontFamily: "Raleway",
@@ -101,12 +97,11 @@ class LoginPage extends StatelessWidget {
                   ),
                   RaisedButton(
                       onPressed: () {
-                        Services.login(uidController.text, pwdController.text)
-                            .then((val) {
+                        Services.login(uidController.text, pwdController.text).then((val) {
                           if (val == true) {
-                            Navigator.of(context).pushNamed("/ProductPage");
+                            Navigator.of(context).pushNamed("/HomePage");
                           }
-                        });
+                        });                           
                       },
                       color: Color(0xFFe5a900),
                       textColor: Colors.black,

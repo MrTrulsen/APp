@@ -1,18 +1,19 @@
+import 'package:first_app/DestinationPage.dart';
+import 'package:first_app/maps.dart';
 import 'package:flutter/material.dart';
-import 'CustomIcons.dart';
-import 'ProductAdCard.dart';
-import 'my_flutter_app_icons.dart';
-import 'ProductPage.dart';
 import 'LoginPage.dart';
-import 'ProductPage2.dart';
-import 'AddNewProduct.dart';
+import 'ProductPage.dart';
+import 'HomePage.dart';
+
 
 void main() => runApp(MaterialApp(
       home: LoginPage(),
       routes: <String, WidgetBuilder> {
-        "/AddNewProduct":(BuildContext context) => new AddNewProduct(),
-        "/ProductPage": (BuildContext context) => new ProductPage2(),
         "/LoginPage": (BuildContext context) => new LoginPage(),
+        "/ProductPage": (BuildContext context) => new ProductPage(),
+        "/HomePage": (BuildContext context) => new HomeScreen(),
+        "/DestinationPage": (BuildContext context) => new DestinationScreen(),
+        "/DirectionMap":  (BuildContext context) => new MyMap(),
       },
       debugShowCheckedModeBanner: false,
     ));
