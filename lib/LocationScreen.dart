@@ -51,6 +51,8 @@ class _LocationScreenState extends State<LocationScreen> {
                     child: Image(
                       image: AssetImage(widget.location.imageUrl),
                       fit: BoxFit.cover,
+                      colorBlendMode: BlendMode.darken,
+                      color: Colors.black12,
                     ),
                   ),
                 ),
@@ -63,7 +65,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     IconButton(
                       icon: Icon(Icons.arrow_back),
                       iconSize: 30.0,
-                      color: Colors.black,
+                      color: Colors.white,
                       onPressed: () => Navigator.pop(context),
                     ),
                     Row(
@@ -71,13 +73,13 @@ class _LocationScreenState extends State<LocationScreen> {
                         IconButton(
                           icon: Icon(Icons.search),
                           iconSize: 30.0,
-                          color: Colors.black,
+                          color: Colors.white,
                           onPressed: () => Navigator.pop(context),
                         ),
                         IconButton(
                           icon: Icon(FontAwesomeIcons.sortAmountDown),
                           iconSize: 25.0,
-                          color: Colors.black,
+                          color: Colors.white,
                           onPressed: () => Navigator.pop(context),
                         ),
                       ],

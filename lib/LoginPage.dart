@@ -68,7 +68,7 @@ class LoginPage extends StatelessWidget {
                       child: TextField(
                         controller: uidController,
                         decoration: InputDecoration(
-                            hintText: "username",
+                            hintText: "Username",
                             hintStyle:
                                 TextStyle(color: Colors.grey, fontSize: 12.0)),
                       )),
@@ -119,7 +119,7 @@ class LoginPage extends StatelessWidget {
                         if (user != null) {
                           var a = await Services.fetchLocations(user);
                           var b =
-                              await Services.fetchHotels(user, "Ulsteinvik");
+                              await Services.fetchHotels(user, "Ålesund");
                           Navigator.of(context).pushNamed("/HomePage");
                         } else {
                           return Alert(
