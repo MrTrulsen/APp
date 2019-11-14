@@ -1,10 +1,11 @@
-import 'package:first_app/DestinationPage.dart';
+import 'package:first_app/LocationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'models/destination_model.dart';
+import 'Services.dart';
+import 'models/location_model.dart';
 
-class DestinationCarousel extends StatelessWidget {
+class LocationCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,15 +38,15 @@ class DestinationCarousel extends StatelessWidget {
           height: 300.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: destinations.length,
+            itemCount: Services.locations.length,
             itemBuilder: (BuildContext context, int index) {
-              Destination destination = destinations[index];
+              Location location = Services.locations[index];
               return GestureDetector(
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => DestinationScreen(
-                      destination: destination,
+                    builder: (_) => LocationScreen(
+                      location: location,
                     ),
                   ),
                 ),
@@ -70,14 +71,14 @@ class DestinationCarousel extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  '${destination.activities.length} activities',
+                                  '${location.activities.length} activities',
                                   style: TextStyle(
                                       fontSize: 22.0,
                                       fontWeight: FontWeight.w600,
                                       letterSpacing: 1.2),
                                 ),
                                 Text(
-                                  destination.description,
+                                  location.description,
                                   style: TextStyle(
                                     color: Colors.grey,
                                   ),
@@ -100,13 +101,13 @@ class DestinationCarousel extends StatelessWidget {
                         child: Stack(
                           children: <Widget>[
                             Hero(
-                              tag: destination.imageUrl,
+                              tag: location.imageUrl,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 child: Image(
                                   height: 180.0,
                                   width: 180.0,
-                                  image: AssetImage(destination.imageUrl),
+                                  image: AssetImage(location.imageUrl),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -118,7 +119,7 @@ class DestinationCarousel extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    destination.city,
+                                    location.city,
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 24.0,
@@ -135,7 +136,7 @@ class DestinationCarousel extends StatelessWidget {
                                       SizedBox(
                                         width: 5.0,
                                       ),
-                                      Text(destination.country,
+                                      Text(location.country,
                                           style: TextStyle(
                                             color: Colors.white,
                                           )),

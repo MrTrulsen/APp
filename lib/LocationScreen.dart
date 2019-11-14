@@ -1,26 +1,26 @@
 import 'dart:async';
 
 import 'package:first_app/models/activity_model.dart';
-import 'package:first_app/models/destination_model.dart';
+import 'package:first_app/models/location_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class DestinationScreen extends StatefulWidget {
-  final Destination destination;
+class LocationScreen extends StatefulWidget {
+  final Location location;
 
-  DestinationScreen({this.destination});
+  LocationScreen({this.location});
 
   @override
-  _DestinationScreenState createState() => _DestinationScreenState();
+  _LocationScreenState createState() => _LocationScreenState();
 }
 
-class _DestinationScreenState extends State<DestinationScreen> {
+class _LocationScreenState extends State<LocationScreen> {
   Completer<GoogleMapController> _controller = Completer();
 
-  Text _buildRatingStars(int rating) {
+  Text _buildRatingStars(double rating) {
     String stars = '';
-    for (int i = 0; i < rating; i++) {
+    for (double i = 0; i < rating; i++) {
       stars += '⭐';
     }
     return Text(stars);
@@ -45,11 +45,11 @@ class _DestinationScreenState extends State<DestinationScreen> {
                       ),
                     ]),
                 child: Hero(
-                  tag: widget.destination.imageUrl,
+                  tag: widget.location.imageUrl,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30.0),
                     child: Image(
-                      image: AssetImage(widget.destination.imageUrl),
+                      image: AssetImage(widget.location.imageUrl),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -92,7 +92,7 @@ class _DestinationScreenState extends State<DestinationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      widget.destination.city,
+                      widget.location.city,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 35.0,
@@ -109,7 +109,7 @@ class _DestinationScreenState extends State<DestinationScreen> {
                         SizedBox(
                           width: 5.0,
                         ),
-                        Text(widget.destination.country,
+                        Text(widget.location.country,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20.0,
@@ -136,9 +136,9 @@ class _DestinationScreenState extends State<DestinationScreen> {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.only(top: 10.0, bottom: 15.0),
-              itemCount: widget.destination.activities.length,
+              itemCount: widget.location.activities.length,
               itemBuilder: (BuildContext context, int index) {
-                Activity activity = widget.destination.activities[index];
+                Activity activity = widget.location.activities[index];
                 return Stack(
                   children: <Widget>[
                     Container(
@@ -212,7 +212,7 @@ class _DestinationScreenState extends State<DestinationScreen> {
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text(activity.startTimes[0]),
+                                  child: Text(activity.startTimes),
                                 ),
                                 SizedBox(
                                   width: 10.0,
@@ -227,7 +227,7 @@ class _DestinationScreenState extends State<DestinationScreen> {
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text(activity.startTimes[1]),
+                                  child: Text(activity.startTimes),
                                 ),
                               ],
                             )

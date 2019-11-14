@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'Services.dart';
 import 'dart:async';
+import 'User.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class LoginPage extends StatelessWidget {
   final uidController = TextEditingController();
   final pwdController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +26,10 @@ class LoginPage extends StatelessWidget {
           Center(
               child: Container(
             width: double.infinity,
-            height: 350.0,
+            height: 390.0,
             margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.6),
+                color: Colors.white.withOpacity(0.75),
                 borderRadius: BorderRadius.circular(8.0),
                 boxShadow: [
                   BoxShadow(
@@ -93,15 +94,54 @@ class LoginPage extends StatelessWidget {
                                 TextStyle(color: Colors.grey, fontSize: 12.0)),
                       )),
                   SizedBox(
-                    height: 20.0,
+                    height: 15.0,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).pushNamed("/HomePage"),
+                      child: Text("Forgot password?",
+                          style: TextStyle(
+                            color: Color(0xFFe5a900),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                            decoration: TextDecoration.underline,
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 35.0,
                   ),
                   RaisedButton(
-                      onPressed: () {
-                        Services.login(uidController.text, pwdController.text).then((val) {
-                          if (val == true) {
-                            Navigator.of(context).pushNamed("/HomePage");
-                          }
-                        });                           
+                      onPressed: () async {
+                        User user = await Services.login(
+                            uidController.text, pwdController.text);
+                        if (user != null) {
+                          var a = await Services.fetchLocations(user);
+                          var b =
+                              await Services.fetchHotels(user, "Ulsteinvik");
+                          Navigator.of(context).pushNamed("/HomePage");
+                        } else {
+                          return Alert(
+                              context: context,
+                              title: "Invalid credentials",
+                              desc: "Wrong username or password",
+                              image: Image.asset(
+                                "images/ops.gif",
+                              ),
+                              buttons: [
+                                DialogButton(
+                                  child: Text("OK",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold)),
+                                  color: Color(0xFFe5a900),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                )
+                              ]).show();
+                        }
                       },
                       color: Color(0xFFe5a900),
                       textColor: Colors.black,
@@ -119,20 +159,32 @@ class LoginPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Don't have an account yet?",
+                      Text("New to Wanderlust?",
                           style: TextStyle(
-                            fontSize: 18.0,
+                            color: Colors.black,
+                            fontSize: 16.0,
                           )),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      InkWell(
+                          onTap: () =>
+                              Navigator.of(context).pushNamed("/HomePage"),
+                          child: Text("Register",
+                              style: TextStyle(
+                                color: Color(0xFFe5a900),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
+                                decoration: TextDecoration.underline,
+                              ))),
                     ],
                   ),
                 ],
               ),
             ),
-          ))
+          )),
         ],
       ),
     );
   }
 }
-
-

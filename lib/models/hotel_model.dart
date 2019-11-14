@@ -12,7 +12,9 @@ class Hotel{
   });
 }
 
-final List<Hotel> hotels = [
+//TODO REMOVE LIST
+
+/* final List<Hotel> hotels = [
   Hotel(
     imageUrl: 'images/hotel0.jpg',
     name: 'Hotel 0',
@@ -31,4 +33,4 @@ final List<Hotel> hotels = [
     address: '404 Great St',
     price: 240,
   ),
-];
+]; */

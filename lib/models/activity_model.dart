@@ -1,10 +1,9 @@
-
 class Activity {
   String imageUrl;
   String name;
   String type;
-  List<String> startTimes;
-  int rating;
+  String startTimes;
+  double rating;
   int price;
 
   Activity({

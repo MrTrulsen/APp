@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'CustomIcons.dart';
-import 'models/destination_model.dart';
+import 'Services.dart';
+import 'models/location_model.dart';
 import 'models/hotel_model.dart';
 
 class HotelCarousel extends StatelessWidget {
@@ -38,9 +39,9 @@ class HotelCarousel extends StatelessWidget {
           height: 300.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: hotels.length,
+            itemCount: Services.hotels.length,
             itemBuilder: (BuildContext context, int index) {
-              Hotel hotel = hotels[index];
+              Hotel hotel = Services.hotels[index];
               return Container(
                 margin: EdgeInsets.all(10.0),
                 width: 210.0,

@@ -1,4 +1,4 @@
-import 'package:first_app/DestinationPage.dart';
+import 'package:first_app/LocationScreen.dart';
 import 'package:first_app/maps.dart';
 import 'package:flutter/material.dart';
 import 'LoginPage.dart';
@@ -12,7 +12,7 @@ void main() => runApp(MaterialApp(
         "/LoginPage": (BuildContext context) => new LoginPage(),
         "/ProductPage": (BuildContext context) => new ProductPage(),
         "/HomePage": (BuildContext context) => new HomeScreen(),
-        "/DestinationPage": (BuildContext context) => new DestinationScreen(),
+        "/DestinationPage": (BuildContext context) => new LocationScreen(),
         "/DirectionMap":  (BuildContext context) => new MyMap(),
       },
       debugShowCheckedModeBanner: false,
