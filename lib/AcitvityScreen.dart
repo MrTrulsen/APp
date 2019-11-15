@@ -128,16 +128,7 @@ class _ActvityScreenState extends State<ActvityScreen> {
                           SizedBox(
                             height: 8.0,
                           ),
-                          InkWell(
-                            child: Text(
-                              "Take me there!",
-                              style: TextStyle(
-                                color: Colors.white54,
-                                fontSize: 14.0,
-                              ),
-                            ),
-                            onTap: () => launch(widget.activity.name),
-                          ),
+                          
                         ],
                       )
                     ],

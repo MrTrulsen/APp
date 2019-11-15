@@ -91,9 +91,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentTab,
-        onTap: (int value){
+        onTap: (int value) {
           setState(() {
             _currentTab = value;
+            if (_currentTab == 2) {
+              Navigator.of(context).pushNamed("/MyProfilePage");
+            }
           });
         },
         items: [
@@ -124,19 +127,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-List<Widget> bottomNavIconList = [
-  Icon(
-    CustomIcons.search,
-    size: 32.0,
-  ),
-  Icon(
-    MyFlutterApp.store,
-    size: 32.0,
-  ),
-  Icon(
-    CustomIcons.favorite,
-    size: 32.0,
-  ),
-  Icon(CustomIcons.cart, size: 32.0),
-  Image.asset("assets/profile.png", width: 35.0, height: 35.0)
-];

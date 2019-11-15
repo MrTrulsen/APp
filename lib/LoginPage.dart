@@ -3,14 +3,17 @@ import 'Services.dart';
 import 'dart:async';
 import 'User.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:progress_hud/progress_hud.dart';
 
 class LoginPage extends StatelessWidget {
   final uidController = TextEditingController();
   final pwdController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
       body: Stack(
@@ -114,14 +117,25 @@ class LoginPage extends StatelessWidget {
                   ),
                   RaisedButton(
                       onPressed: () async {
+                        _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                          content: new Row(
+                            children: <Widget>[
+                              new CircularProgressIndicator(),
+                              new Text("   Signing-In..."),
+                            ],
+                          ),
+                        ));
                         User user = await Services.login(
                             uidController.text, pwdController.text);
                         if (user != null) {
                           var a = await Services.fetchLocations(user);
-                          var b = await Services.fetchHotels(user, "Ålesund");
-                          var c = await Services.fetchActivities(user, "Ålesund");
+                          var b = await Services.fetchHotels(user);
+                          var c = await Services.fetchActivities(user)
+                              .whenComplete(() => _scaffoldKey.currentState
+                                  .hideCurrentSnackBar());
                           Navigator.of(context).pushNamed("/HomePage");
                         } else {
+                          _scaffoldKey.currentState.hideCurrentSnackBar();
                           return Alert(
                               context: context,
                               title: "Invalid credentials",

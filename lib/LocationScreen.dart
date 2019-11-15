@@ -218,19 +218,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                 ),
                                 SizedBox(
                                   width: 10.0,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(5.0),
-                                  width: 70.0,
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .accentColor
-                                        .withOpacity(0.4),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Text(activity.startTimes),
-                                ),
+                                ),                              
                               ],
                             )
                           ],
