@@ -1,11 +1,11 @@
-import 'package:first_app/LocationScreen.dart';
+import 'package:first_app/AcitvityScreen.dart';
+import 'package:first_app/HotelScreenHero.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'Services.dart';
-import 'models/location_model.dart';
+import 'models/activity_model.dart';
+import 'models/hotel_model.dart';
 
-class LocationCarousel extends StatelessWidget {
+class ActivityCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,7 +15,7 @@ class LocationCarousel extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('Top Destinations',
+              Text('Activities',
                   style: TextStyle(
                       fontSize: 22.0,
                       fontWeight: FontWeight.bold,
@@ -35,18 +35,18 @@ class LocationCarousel extends StatelessWidget {
           ),
         ),
         Container(
-          height: 300.0,
+          height: 310.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: Services.locations.length,
+            itemCount: Services.activitiesToCity.length,
             itemBuilder: (BuildContext context, int index) {
-              Location location = Services.locations[index];
+              Activity activity  = Services.activitiesToCity[index];
               return GestureDetector(
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => LocationScreen(
-                      location: location,
+                    builder: (_) => ActvityScreen(
+                      activity: activity,
                     ),
                   ),
                 ),
@@ -68,21 +68,35 @@ class LocationCarousel extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  '${location.activities.length} activities',
+                                  activity.name,
                                   style: TextStyle(
-                                      fontSize: 22.0,
+                                      fontSize: 18.0,
                                       fontWeight: FontWeight.w600,
-                                      letterSpacing: 1.2),
+                                      letterSpacing: 1.0),
+                                ),
+                                SizedBox(
+                                  height: 2.0,
                                 ),
                                 Text(
-                                  location.description,
+                                  activity.name,
                                   style: TextStyle(
+                                    fontSize: 12.0,
                                     color: Colors.grey,
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 2.0,
+                                ),
+                                Text(
+                                  '\$${activity.price}',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -100,51 +114,18 @@ class LocationCarousel extends StatelessWidget {
                             ]),
                         child: Stack(
                           children: <Widget>[
-                            Hero(
-                              tag: location.imageUrl,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Hero(
+                                tag: activity.imageUrl,
                                 child: Image(
                                   height: 180.0,
                                   width: 180.0,
-                                  image: AssetImage(location.imageUrl),
+                                  image: AssetImage(activity.imageUrl),
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                            Positioned(
-                              left: 10.0,
-                              bottom: 10.0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    location.city,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24.0,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 1.2),
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Icon(
-                                        FontAwesomeIcons.locationArrow,
-                                        size: 10.0,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 5.0,
-                                      ),
-                                      Text(location.country,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          )),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
                           ],
                         ),
                       )

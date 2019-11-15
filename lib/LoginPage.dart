@@ -118,8 +118,8 @@ class LoginPage extends StatelessWidget {
                             uidController.text, pwdController.text);
                         if (user != null) {
                           var a = await Services.fetchLocations(user);
-                          var b =
-                              await Services.fetchHotels(user, "Ålesund");
+                          var b = await Services.fetchHotels(user, "Ålesund");
+                          var c = await Services.fetchActivities(user, "Ålesund");
                           Navigator.of(context).pushNamed("/HomePage");
                         } else {
                           return Alert(

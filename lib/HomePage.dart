@@ -1,11 +1,9 @@
 import 'package:first_app/CustomIcons.dart';
-import 'package:first_app/hikes_carousel.dart';
 import 'package:first_app/hotel_carousel.dart';
-import 'package:first_app/models/location_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'activity_carousel.dart';
 import 'location_carousel.dart';
 import 'my_flutter_app_icons.dart';
 
@@ -87,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 10.0,
             ),
-            HikesCarousel(),
+            ActivityCarousel(),
           ],
         ),
       ),

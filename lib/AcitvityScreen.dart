@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'models/hotel_model.dart';
+import 'models/activity_model.dart';
 
-class HotelScreenHero extends StatefulWidget {
-  final Hotel hotel;
+class ActvityScreen extends StatefulWidget {
+  final Activity activity;
 
-  HotelScreenHero({this.hotel});
+  ActvityScreen({this.activity});
 
   @override
-  _HotelScreenHeroState createState() => _HotelScreenHeroState();
+  _ActvityScreenState createState() => _ActvityScreenState();
 }
 
-class _HotelScreenHeroState extends State<HotelScreenHero> {
+class _ActvityScreenState extends State<ActvityScreen> {
   Text _buildRatingStars(double rating) {
     String stars = '';
     for (double i = 0; i < rating; i++) {
@@ -37,9 +37,9 @@ class _HotelScreenHeroState extends State<HotelScreenHero> {
           fit: StackFit.expand,
           children: <Widget>[
             Hero(
-              tag: widget.hotel.imageUrl,
+              tag: widget.activity.imageUrl,
               child: Image(
-                image: AssetImage(widget.hotel.imageUrl),
+                image: AssetImage(widget.activity.imageUrl),
                 fit: BoxFit.cover,
                 colorBlendMode: BlendMode.darken,
                 color: Colors.black54,
@@ -74,7 +74,7 @@ class _HotelScreenHeroState extends State<HotelScreenHero> {
                   Container(
                     width: 220.0,
                     child: Text(
-                      widget.hotel.name,
+                      widget.activity.name,
                       style: TextStyle(
                           letterSpacing: 1.1,
                           color: Colors.white,
@@ -85,13 +85,13 @@ class _HotelScreenHeroState extends State<HotelScreenHero> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  _buildRatingStars(widget.hotel.rating),
+                  _buildRatingStars(widget.activity.rating),
                   SizedBox(
                     height: 16.0,
                   ),
                   Container(
                     child: Text(
-                      widget.hotel.description,
+                      widget.activity.type,
                       style: TextStyle(
                         color: Colors.white54,
                         height: 1.3,
@@ -119,7 +119,7 @@ class _HotelScreenHeroState extends State<HotelScreenHero> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "\$" + widget.hotel.price.toString() + " / night",
+                            "\$" + widget.activity.price.toString(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 28.0,
@@ -136,7 +136,7 @@ class _HotelScreenHeroState extends State<HotelScreenHero> {
                                 fontSize: 14.0,
                               ),
                             ),
-                            onTap: () => launch(widget.hotel.url),
+                            onTap: () => launch(widget.activity.name),
                           ),
                         ],
                       )

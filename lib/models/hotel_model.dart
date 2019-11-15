@@ -3,12 +3,18 @@ class Hotel{
   String name;
   String address;
   int price;
+  String description;
+  String url;
+  double rating;
 
   Hotel({
    this.imageUrl,
    this.name,
    this.address,
-   this.price
+   this.price,
+   this.description,
+   this.rating,
+   this.url
   });
 }
 
