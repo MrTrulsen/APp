@@ -44,7 +44,6 @@ class Services {
         //TO DO this is just temp
         if (currentCity == "") {
           userLoggedIn.currentCity = "Ålesund";
-          userLoggedIn.displayName = "";
           return userLoggedIn;
         }
         userLoggedIn.currentCity = currentCity;
@@ -108,7 +107,6 @@ class Services {
               rating: u["rating"],
               price: u["price"],
               startTimes: u["startTimes"]);
-          print(activity);
           activities.add(activity);
         }
       }
@@ -163,7 +161,6 @@ class Services {
               rating: u["rating"],
               price: u["price"],
               startTimes: u["startTimes"]);
-          print(activity);
           activitiesToCity.add(activity);
         }
       }
