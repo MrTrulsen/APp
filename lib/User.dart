@@ -6,6 +6,7 @@ class User {
   String token;
   String avatarImageUrl;
   String displayName;
+  String occupation;
 
   Map<String, dynamic> toJson() =>
       {'username': username, 'password': password};

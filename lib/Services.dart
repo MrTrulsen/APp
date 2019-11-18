@@ -13,20 +13,6 @@ class Services {
   static List<Activity> activitiesToCity = [];
   static User userLoggedIn;
 
-  static Future<bool> deleteProduct(String name) async {
-    try {
-      final url = "http://localhost:8080/authenticate";
-      var response = await http.delete(url);
-
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
 
   static Future<User> login(String username, String password) async {
     try {
@@ -41,6 +27,8 @@ class Services {
         userLoggedIn.token = jsondata["token"];
         String currentCity = await fetchCurrentCity(userLoggedIn);
         String displayName = await fetchDisplayName(userLoggedIn);
+        String avatarImageUrl = await fetchUserImage(userLoggedIn);
+        String occupation = await fetchOccupation(userLoggedIn);
         //TO DO this is just temp
         if (currentCity == "") {
           userLoggedIn.currentCity = "Ålesund";
@@ -48,6 +36,8 @@ class Services {
         }
         userLoggedIn.currentCity = currentCity;
         userLoggedIn.displayName = displayName;
+        userLoggedIn.avatarImageUrl = avatarImageUrl;
+        userLoggedIn.occupation = occupation;
         return userLoggedIn;
       } else {
         return null;
@@ -202,5 +192,39 @@ class Services {
       throw Exception(e.toString());
     }
     return displayName;
+  }
+
+  static Future<String> fetchUserImage(User user) async {
+    String avatarImageUrl = "";
+    try {
+      final path = "/getUserAvatarImageUrl";
+      final response = await http.get(
+        url + path,
+        headers: {HttpHeaders.authorizationHeader: "Bearer " + user.token},
+      );
+      if (response.statusCode == 200) {
+        avatarImageUrl = response.body;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return avatarImageUrl;
+  }
+
+  static Future<String> fetchOccupation(User user) async {
+    String occupation = "";
+    try {
+      final path = "/getOccupation";
+      final response = await http.get(
+        url + path,
+        headers: {HttpHeaders.authorizationHeader: "Bearer " + user.token},
+      );
+      if (response.statusCode == 200) {
+        occupation = response.body;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return occupation;
   }
 }

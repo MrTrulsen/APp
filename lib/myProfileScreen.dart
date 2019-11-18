@@ -36,7 +36,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   CircleAvatar(
                     radius: 50.0,
                     backgroundImage:
-                        AssetImage("images/User_Avatar-04-512.png"),
+                        AssetImage(Services.userLoggedIn.avatarImageUrl),
                   ),
                   Text(
                     Services.userLoggedIn.displayName,
@@ -49,7 +49,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    "Software engineer",
+                    Services.userLoggedIn.occupation,
                     style: TextStyle(
                       fontFamily: "Raleway",
                       fontSize: 30.0,

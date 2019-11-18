@@ -1,4 +1,5 @@
 import 'package:first_app/CustomIcons.dart';
+import 'package:first_app/Services.dart';
 import 'package:first_app/hotel_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -117,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: CircleAvatar(
               radius: 15.0,
-              backgroundImage: AssetImage('images/User_Avatar-04-512.png'),
+              backgroundImage: AssetImage(Services.userLoggedIn.avatarImageUrl),
             ),
             title: SizedBox.shrink(),
           ),
