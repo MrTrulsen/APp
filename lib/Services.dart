@@ -16,7 +16,6 @@ class Services {
   static List<Activity> activitiesToCity = [];
   static User userLoggedIn;
 
-
   static Future<User> login(String username, String password) async {
     try {
       final path = "/authenticate";
@@ -50,7 +49,13 @@ class Services {
     }
   }
 
-  static Future<bool> register(String username, String password, String displayName, String currentCity, String occupation, String avatarImageUrl) async {
+  static Future<bool> register(
+      String username,
+      String password,
+      String displayName,
+      String currentCity,
+      String occupation,
+      String avatarImageUrl) async {
     try {
       final path = "/register";
       User registerUser = new User(username, password);
@@ -64,7 +69,7 @@ class Services {
           headers: {"Content-Type": "application/json"}, body: jsonString);
 
       if (response.statusCode == 200) {
-         return true;
+        return true;
       } else {
         return false;
       }
@@ -285,12 +290,16 @@ class Services {
   static Future<LocationCoordinates> fetchLocation(String address) async {
     LocationCoordinates coor = new LocationCoordinates();
     try {
-      final url = "https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyD4pTOk2AwILedCWEUQ71f1agFqwX8gGkc";
+      final url = "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+          address +
+          "&key=AIzaSyD4pTOk2AwILedCWEUQ71f1agFqwX8gGkc";
       final response = await http.get(url);
       if (response.statusCode == 200) {
         Map<String, dynamic> map = jsonDecode(response.body);
-        dynamic lat = json.decode(response.body)["results"][0]["geometry"]["location"]["lat"];
-        dynamic lng = json.decode(response.body)["results"][0]["geometry"]["location"]["lng"];
+        dynamic lat = json.decode(response.body)["results"][0]["geometry"]
+            ["location"]["lat"];
+        dynamic lng = json.decode(response.body)["results"][0]["geometry"]
+            ["location"]["lng"];
         coor.lat = lat;
         coor.lng = lng;
       }
@@ -300,6 +309,55 @@ class Services {
     return coor;
   }
 
+  static Future<bool> setUserCurrentCity(String currentCity) async {
+    bool success = false;
+    try {
+      final path = "/setCurrentCity?city=" + currentCity;
+      final response = await http.post(
+        url + path,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer " + userLoggedIn.token
+        },
+      );
+      if (response.statusCode == 200) {
+        success = true;
+        userLoggedIn.currentCity = currentCity;
+        updateAllValues(currentCity);
+        return success;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return success;
+  }
 
- 
+  static Future<bool> updateAllValues(String currentCity) async {
+    bool success = false;
+    locations = [];
+    hotels = [];
+    restaurants = [];
+    activitiesToCity = [];
+
+    try {
+      final path = "/setCurrentCity?city=" + currentCity;
+      final response = await http.post(
+        url + path,
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer " + userLoggedIn.token
+        },
+      );
+      if (response.statusCode == 200) {
+        await Services.fetchLocations(userLoggedIn);
+        await Services.fetchHotels(userLoggedIn);
+        await Services.fetchActivities(userLoggedIn);
+        await Services.fetchRestaurants(userLoggedIn);
+        success = true;
+        userLoggedIn.currentCity = currentCity;
+        return success;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return success;
+  }
 }

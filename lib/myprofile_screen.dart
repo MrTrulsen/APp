@@ -8,6 +8,16 @@ class MyProfileScreen extends StatefulWidget {
 }
 
 class _MyProfileScreenState extends State<MyProfileScreen> {
+  final currentCityController =
+      TextEditingController(text: Services.userLoggedIn.currentCity);
+  bool isEnabled = false;
+  Color currentCityCardColor = Colors.white70;
+  int _currentTab = 0;
+  Icon floatingPressed = new Icon(
+    FontAwesomeIcons.cog,
+    size: 30.0,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +75,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     ),
                   ),
                   Card(
-                    color: Colors.white,
+                    color: currentCityCardColor,
                     margin:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
@@ -85,40 +95,88 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     ),
                   ),
                   Card(
-                    color: Colors.white,
+                    color: currentCityCardColor,
                     margin:
                         EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                     child: ListTile(
-                      leading: Icon(
-                        FontAwesomeIcons.city,
-                        color: Color(0xFFe5a900),
-                        size: 25.0,
-                      ),
-                      title: Text(
-                        Services.userLoggedIn.currentCity,
-                        style: TextStyle(
-                          fontFamily: "Raleway",
-                          fontSize: 20.0,
+                        leading: Icon(
+                          FontAwesomeIcons.city,
                           color: Color(0xFFe5a900),
+                          size: 25.0,
                         ),
-                      ),
-                    ),
+                        title: TextField(
+                          style: TextStyle(
+                            decoration: TextDecoration.none,
+                            fontFamily: "Raleway",
+                            fontSize: 20.0,
+                            color: Color(0xFFe5a900),
+                          ),
+                          controller: currentCityController,
+                          enabled: isEnabled,
+                          decoration: InputDecoration.collapsed(hintText: ""),
+                        )),
                   ),
                 ],
               ),
             ],
           ),
         ),
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 4,
+          clipBehavior: Clip.antiAlias,
+          child: BottomNavigationBar(
+            currentIndex: _currentTab,
+            onTap: (int value) {
+              setState(() {
+                _currentTab = value;
+                if (_currentTab == 2) {
+                  Navigator.of(context).pushNamed("/MyProfilePage");
+                }
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.apps,
+                  size: 30.0,
+                ),
+                title: SizedBox.shrink(),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.favorite,
+                  size: 30.0,
+                ),
+                title: SizedBox.shrink(),
+              ),
+            ],
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
           height: 70.0,
           child: FittedBox(
             child: FloatingActionButton(
               foregroundColor: Colors.white,
-              child: Icon(
-                FontAwesomeIcons.cog,
-                size: 30.0,
-              ),
-              onPressed: () {},
+              child: floatingPressed,
+              onPressed: () {
+                setState(() {
+                  if (floatingPressed.icon == FontAwesomeIcons.cog) {
+                    floatingPressed = Icon(FontAwesomeIcons.times);
+                    isEnabled = true;
+                    currentCityCardColor = Colors.white;
+                  } else {
+                    if (currentCityController.text !=
+                        Services.userLoggedIn.currentCity) {
+                      Services.setUserCurrentCity(currentCityController.text.trim());
+                    }
+                    floatingPressed = Icon(FontAwesomeIcons.cog);
+                    isEnabled = true;
+                    currentCityCardColor = Colors.white70;
+                  }
+                });
+              },
             ),
           ),
         ));
