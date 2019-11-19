@@ -9,5 +9,5 @@ class User {
   String occupation;
 
   Map<String, dynamic> toJson() =>
-      {'username': username, 'password': password};
+      {'username': username, 'password': password, 'currentCity': currentCity, 'displayName': displayName,'occupation': occupation,'avatarImageUrl': avatarImageUrl,};
 }

@@ -21,14 +21,87 @@ class _HomeScreenState extends State<HomeScreen> {
     FontAwesomeIcons.plane,
     FontAwesomeIcons.bed,
     FontAwesomeIcons.hiking,
-    FontAwesomeIcons.biking
+    FontAwesomeIcons.utensils
   ];
+
+  Widget _buildMainPage(int index) {
+    if (index == 0) {
+      return Column(
+        children: <Widget>[
+          SizedBox(
+            height: 20.0,
+          ),
+          LocationCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          HotelCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          ActivityCarousel(),
+        ],
+      );
+    } else if (index == 1) {
+      return Column(
+        children: <Widget>[
+          SizedBox(
+            height: 20.0,
+          ),
+          HotelCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          ActivityCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          LocationCarousel(),
+        ],
+      );
+    } else if (index == 2) {
+      return Column(
+        children: <Widget>[
+          SizedBox(
+            height: 20.0,
+          ),
+          ActivityCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          HotelCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          LocationCarousel(),
+        ],
+      );
+    } else {
+      return Column(
+        children: <Widget>[
+          SizedBox(
+            height: 20.0,
+          ),
+          LocationCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          HotelCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          ActivityCarousel(),
+        ],
+      );
+    }
+  }
 
   Widget _buildIcon(int index) {
     return GestureDetector(
         onTap: () {
           setState(() {
             _selectedIndex = index;
+            _buildMainPage(index);
           });
           print(_selectedIndex);
         },
@@ -75,18 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                   .toList(),
             ),
-            SizedBox(
-              height: 20.0,
-            ),
-            LocationCarousel(),
-            SizedBox(
-              height: 10.0,
-            ),
-            HotelCarousel(),
-            SizedBox(
-              height: 10.0,
-            ),
-            ActivityCarousel(),
+            _buildMainPage(_selectedIndex),
           ],
         ),
       ),
@@ -127,4 +189,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

@@ -1,4 +1,6 @@
+import 'package:first_app/ForgotPasswordPage.dart';
 import 'package:first_app/LocationScreen.dart';
+import 'package:first_app/RegisterPage.dart';
 import 'package:first_app/maps.dart';
 import 'package:first_app/myProfileScreen.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,9 @@ void main() => runApp(MaterialApp(
         "/HomePage": (BuildContext context) => new HomeScreen(),
         "/DestinationPage": (BuildContext context) => new LocationScreen(),
         "/DirectionMap":  (BuildContext context) => new MyMap(),
-        "/MyProfilePage": (BuildContext context) => new MyProfileScreen()
+        "/MyProfilePage": (BuildContext context) => new MyProfileScreen(),
+        "/RegisterPage": (BuildContext context) => new RegisterPage(),
+        "/ForgotPasswordPage": (BuildContext context) => new ForgotPasswordPage(),
       },
       debugShowCheckedModeBanner: false,
     ));

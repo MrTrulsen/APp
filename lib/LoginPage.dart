@@ -102,7 +102,7 @@ class LoginPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.center,
                     child: InkWell(
-                      onTap: () => Navigator.of(context).pushNamed("/HomePage"),
+                      onTap: () => Navigator.of(context).pushNamed("/ForgotPasswordPage"),
                       child: Text("Forgot password?",
                           style: TextStyle(
                             color: Color(0xFFe5a900),
@@ -183,7 +183,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       InkWell(
                           onTap: () =>
-                              Navigator.of(context).pushNamed("/HomePage"),
+                              Navigator.of(context).pushNamed("/RegisterPage"),
                           child: Text("Register",
                               style: TextStyle(
                                 color: Color(0xFFe5a900),

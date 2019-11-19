@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:first_app/maps.dart';
 import 'package:first_app/models/activity_model.dart';
 import 'package:first_app/models/location_model.dart';
 import 'package:http/http.dart' as http;
@@ -41,6 +42,29 @@ class Services {
         return userLoggedIn;
       } else {
         return null;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<bool> register(String username, String password, String displayName, String currentCity, String occupation, String avatarImageUrl) async {
+    try {
+      final path = "/register";
+      User registerUser = new User(username, password);
+      registerUser.displayName = displayName;
+      registerUser.currentCity = currentCity;
+      registerUser.occupation = occupation;
+      registerUser.avatarImageUrl = "images/User_Avatar-04-512.png";
+      String jsonString = jsonEncode(registerUser);
+
+      var response = await http.post(url + path,
+          headers: {"Content-Type": "application/json"}, body: jsonString);
+
+      if (response.statusCode == 200) {
+         return true;
+      } else {
+        return false;
       }
     } catch (e) {
       throw Exception(e.toString());
@@ -227,4 +251,25 @@ class Services {
     }
     return occupation;
   }
+
+  static Future<LocationCoordinates> fetchLocation(String address) async {
+    LocationCoordinates coor = new LocationCoordinates();
+    try {
+      final url = "https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyD4pTOk2AwILedCWEUQ71f1agFqwX8gGkc";
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> map = jsonDecode(response.body);
+        dynamic lat = json.decode(response.body)["results"][0]["geometry"]["location"]["lat"];
+        dynamic lng = json.decode(response.body)["results"][0]["geometry"]["location"]["lng"];
+        coor.lat = lat;
+        coor.lng = lng;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return coor;
+  }
+
+
+ 
 }

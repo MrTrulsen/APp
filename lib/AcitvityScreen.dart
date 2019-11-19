@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'models/activity_model.dart';
 
@@ -12,6 +13,8 @@ class ActvityScreen extends StatefulWidget {
 }
 
 class _ActvityScreenState extends State<ActvityScreen> {
+  bool _selected = false;
+
   Text _buildRatingStars(double rating) {
     String stars = '';
     for (double i = 0; i < rating; i++) {
@@ -25,6 +28,32 @@ class _ActvityScreenState extends State<ActvityScreen> {
         letterSpacing: 1.3,
       ),
     );
+  }
+
+  Widget _buildIconHeart(bool selected) {
+    return GestureDetector(
+        onTap: () {
+          setState(() {
+            if(selected == false){
+             _selected = true;
+             //TODO legg til i favoritter. 
+            }
+            else{
+              _selected = false;
+            }
+          });
+        },
+        child: Container(
+          height: 60.0,
+          width: 60.0,
+          child: Icon(
+            FontAwesomeIcons.heart,
+            size: 25.0,
+            color: _selected == false
+                ? Colors.white
+                : Colors.red,
+          ),
+        ));
   }
 
   @override
@@ -58,6 +87,7 @@ class _ActvityScreenState extends State<ActvityScreen> {
                     iconSize: 30.0,
                     onPressed: () => Navigator.pop(context),
                   ),
+                  _buildIconHeart(_selected)
                 ],
               ),
             ),
@@ -128,7 +158,6 @@ class _ActvityScreenState extends State<ActvityScreen> {
                           SizedBox(
                             height: 8.0,
                           ),
-                          
                         ],
                       )
                     ],

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:first_app/Services.dart';
+import 'package:first_app/maps.dart';
 import 'package:first_app/models/activity_model.dart';
 import 'package:first_app/models/location_model.dart';
 import 'package:flutter/material.dart';
@@ -125,8 +127,21 @@ class _LocationScreenState extends State<LocationScreen> {
                 right: 20.0,
                 bottom: 20.0,
                 child: GestureDetector(
-                  onTap: () => Navigator.of(context).pushNamed("/DirectionMap"),
+                  onTap: () async {
+                    LocationCoordinates locat =
+                        await Services.fetchLocation(widget.location.city);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MyMap(
+                          locationCoordinates: locat,
+                          location: widget.location,
+                        ),
+                      ),
+                    );
+                  },
                   child: Icon(
+                    // TODO Bytte til map-marker-alt eller search location? 
                     FontAwesomeIcons.route,
                     color: Colors.white,
                     size: 35.0,
@@ -218,7 +233,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                 ),
                                 SizedBox(
                                   width: 10.0,
-                                ),                              
+                                ),
                               ],
                             )
                           ],
@@ -249,18 +264,4 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 
-  Widget _googleMap(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition:
-            CameraPosition(target: LatLng(62.472229, 6.149482), zoom: 12),
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-    );
-  }
 }
