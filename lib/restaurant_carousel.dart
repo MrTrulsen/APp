@@ -1,10 +1,26 @@
+import 'package:first_app/models/restaurant_model.dart';
+import 'package:first_app/restaurant_screen.dart';
 import 'package:flutter/material.dart';
 import 'services.dart';
-import 'acitvity_screen.dart';
-import 'models/activity_model.dart';
 import 'models/hotel_model.dart';
 
-class ActivityCarousel extends StatelessWidget {
+class RestaurantCarousel extends StatelessWidget {
+
+ Text _buildRatingStars(double rating) {
+    String stars = '';
+    for (double i = 0; i < rating; i++) {
+      stars += '⭐';
+    }
+    return Text(
+      stars + " (" + rating.toString() + ")",
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 14.0,
+        letterSpacing: 1.3,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,11 +30,11 @@ class ActivityCarousel extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('Activities',
+              Text('Restaurants',
                   style: TextStyle(
                       fontSize: 22.0,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 1.3)),
+                      letterSpacing: 1.5)),
               GestureDetector(
                 onTap: () => print('see all'),
                 child: Text(
@@ -34,18 +50,18 @@ class ActivityCarousel extends StatelessWidget {
           ),
         ),
         Container(
-          height: 310.0,
+          height: 300.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: Services.activitiesToCity.length,
+            itemCount: Services.restaurants.length,
             itemBuilder: (BuildContext context, int index) {
-              Activity activity = Services.activitiesToCity[index];
+              Restaurant restaurant = Services.restaurants[index];
               return GestureDetector(
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ActvityScreen(
-                      activity: activity,
+                    builder: (_) => RestaurantScreen(
+                      restaurant: restaurant,
                     ),
                   ),
                 ),
@@ -70,32 +86,28 @@ class ActivityCarousel extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  activity.name,
+                                  restaurant.name,
                                   style: TextStyle(
-                                      fontSize: 18.0,
+                                      fontSize: 21.0,
                                       fontWeight: FontWeight.w600,
-                                      letterSpacing: 1.0),
+                                      letterSpacing: 1.2),
                                 ),
                                 SizedBox(
                                   height: 2.0,
                                 ),
                                 Text(
-                                  activity.name,
+                                  restaurant.address,
                                   style: TextStyle(
-                                    fontSize: 12.0,
                                     color: Colors.grey,
                                   ),
                                 ),
                                 SizedBox(
+                                  height: 8.0,
+                                ),
+                                _buildRatingStars(restaurant.rating),
+                                SizedBox(
                                   height: 2.0,
                                 ),
-                                Text(
-                                  '\$${activity.price}',
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )
                               ],
                             ),
                           ),
@@ -116,11 +128,11 @@ class ActivityCarousel extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(20.0),
                               child: Hero(
-                                tag: activity.imageUrl,
+                                tag: restaurant.imageUrl,
                                 child: Image(
                                   height: 180.0,
                                   width: 180.0,
-                                  image: AssetImage(activity.imageUrl),
+                                  image: AssetImage(restaurant.imageUrl),
                                   fit: BoxFit.cover,
                                 ),
                               ),

@@ -3,14 +3,16 @@ import 'dart:io';
 import 'package:first_app/maps.dart';
 import 'package:first_app/models/activity_model.dart';
 import 'package:first_app/models/location_model.dart';
+import 'package:first_app/models/restaurant_model.dart';
 import 'package:http/http.dart' as http;
-import 'User.dart';
+import 'user.dart';
 import 'models/hotel_model.dart';
 
 class Services {
   static const String url = "http://192.168.1.101:8080";
   static List<Location> locations = [];
   static List<Hotel> hotels = [];
+  static List<Restaurant> restaurants = [];
   static List<Activity> activitiesToCity = [];
   static User userLoggedIn;
 
@@ -150,6 +152,34 @@ class Services {
               url: u["url"],
               rating: u["rating"]);
           hotels.add(hotel);
+        }
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return true;
+  }
+
+  static Future<bool> fetchRestaurants(User user) async {
+    try {
+      final path = "/getRestaurants" + "?city=" + user.currentCity;
+      final response = await http.get(
+        url + path,
+        headers: {HttpHeaders.authorizationHeader: "Bearer " + user.token},
+      );
+
+      if (response.statusCode == 200) {
+        final jsondata = json.decode(response.body);
+        for (var u in jsondata) {
+          Restaurant restaurant = Restaurant(
+              imageUrl: u["imageUrl"],
+              address: u["address"],
+              name: u["name"],
+              description: u["description"],
+              url: u["url"],
+              phoneNumber: u["phoneNumber"],
+              rating: u["rating"]);
+          restaurants.add(restaurant);
         }
       }
     } catch (e) {

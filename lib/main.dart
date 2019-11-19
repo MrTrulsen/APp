@@ -1,11 +1,11 @@
-import 'package:first_app/ForgotPasswordPage.dart';
-import 'package:first_app/LocationScreen.dart';
-import 'package:first_app/RegisterPage.dart';
+import 'package:first_app/register_screen.dart';
 import 'package:first_app/maps.dart';
-import 'package:first_app/myProfileScreen.dart';
 import 'package:flutter/material.dart';
-import 'LoginPage.dart';
-import 'HomePage.dart';
+import 'forgot_password_page.dart';
+import 'home_screen.dart';
+import 'location_screen.dart';
+import 'login_screen.dart';
+import 'myprofile_screen.dart';
 
 
 void main() => runApp(MaterialApp(

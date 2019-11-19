@@ -1,6 +1,6 @@
-import 'package:first_app/HotelScreenHero.dart';
 import 'package:flutter/material.dart';
-import 'Services.dart';
+import 'services.dart';
+import 'hotel_screen.dart';
 import 'models/hotel_model.dart';
 
 class HotelCarousel extends StatelessWidget {

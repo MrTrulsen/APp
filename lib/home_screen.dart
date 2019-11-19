@@ -1,6 +1,6 @@
-import 'package:first_app/CustomIcons.dart';
-import 'package:first_app/Services.dart';
+import 'package:first_app/services.dart';
 import 'package:first_app/hotel_carousel.dart';
+import 'package:first_app/restaurant_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
   List<IconData> _icons = [
-    FontAwesomeIcons.plane,
+    FontAwesomeIcons.mapMarkedAlt,
     FontAwesomeIcons.bed,
     FontAwesomeIcons.hiking,
     FontAwesomeIcons.utensils
@@ -40,6 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 10.0,
           ),
           ActivityCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          RestaurantCarousel(),
         ],
       );
     } else if (index == 1) {
@@ -57,6 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 10.0,
           ),
           LocationCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          RestaurantCarousel(),
         ],
       );
     } else if (index == 2) {
@@ -74,6 +82,10 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 10.0,
           ),
           LocationCarousel(),
+          SizedBox(
+            height: 10.0,
+          ),
+          RestaurantCarousel(),
         ],
       );
     } else {
@@ -81,6 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           SizedBox(
             height: 20.0,
+          ),
+          RestaurantCarousel(),
+          SizedBox(
+            height: 10.0,
           ),
           LocationCarousel(),
           SizedBox(

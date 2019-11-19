@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'Services.dart';
+import 'services.dart';
 import 'dart:async';
-import 'User.dart';
+import 'user.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:progress_hud/progress_hud.dart';
 
@@ -130,7 +130,8 @@ class LoginPage extends StatelessWidget {
                         if (user != null) {
                           var a = await Services.fetchLocations(user);
                           var b = await Services.fetchHotels(user);
-                          var c = await Services.fetchActivities(user)
+                          var c = await Services.fetchActivities(user);
+                          var d = await Services.fetchRestaurants(user)
                               .whenComplete(() => _scaffoldKey.currentState
                                   .hideCurrentSnackBar());
                           Navigator.of(context).pushNamed("/HomePage");

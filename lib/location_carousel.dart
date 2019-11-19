@@ -1,8 +1,8 @@
-import 'package:first_app/LocationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'Services.dart';
+import 'services.dart';
+import 'location_screen.dart';
 import 'models/location_model.dart';
 
 class LocationCarousel extends StatelessWidget {
