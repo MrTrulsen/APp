@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage>
           Center(
               child: Container(
             width: double.infinity,
-            height: 390.0,
+            height: MediaQuery.of(context).size.height/1.75,
             margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.75),
