@@ -1,4 +1,4 @@
-import 'package:first_app/services.dart';
+import 'services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -17,9 +17,9 @@ class LocationCoordinates{
 class MyMap extends StatefulWidget {
 
  final LocationCoordinates locationCoordinates;
- final Location location;
+ final String city;
 
- MyMap({this.locationCoordinates, this.location});
+ MyMap({this.locationCoordinates, this.city});
 
   @override
   State<MyMap> createState() => DirectionShowing();
@@ -27,12 +27,11 @@ class MyMap extends StatefulWidget {
 
 class DirectionShowing extends State<MyMap> {
 
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text(widget.location.city),
+        title: Text(widget.city),
       ),
       body: GoogleMap(
         mapType: MapType.normal,
@@ -41,10 +40,12 @@ class DirectionShowing extends State<MyMap> {
           zoom: 15,
         ),
         markers: {
-          new Marker(markerId: MarkerId(widget.location.city), position: LatLng(widget.locationCoordinates.lat, widget.locationCoordinates.lng),
-          infoWindow: InfoWindow(title: widget.location.city)),
+          new Marker(markerId: MarkerId(widget.city), position: LatLng(widget.locationCoordinates.lat, widget.locationCoordinates.lng),
+          infoWindow: InfoWindow(title: widget.city)),
         }
       ),
     );
   }
 }
+
+

@@ -1,5 +1,8 @@
+import 'package:first_app/services.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'maps.dart';
 import 'models/hotel_model.dart';
 
 class HotelScreenHero extends StatefulWidget {
@@ -82,6 +85,41 @@ class _HotelScreenHeroState extends State<HotelScreenHero> {
                           fontSize: 42.0),
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () async {
+                      LocationCoordinates locat =
+                          await Services.fetchLocation(widget.hotel.address);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MyMap(
+                            locationCoordinates: locat,
+                            city: widget.hotel.address,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          widget.hotel.address,
+                          style: TextStyle(
+                              letterSpacing: 1.1,
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 20.0),
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Icon(
+                          FontAwesomeIcons.mapMarkerAlt,
+                          color: Colors.white,
+                          size: 19.0,
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     height: 10.0,
                   ),
@@ -130,7 +168,7 @@ class _HotelScreenHeroState extends State<HotelScreenHero> {
                           ),
                           InkWell(
                             child: Text(
-                              "Take me there!",
+                              "Take me to their site!",
                               style: TextStyle(
                                 color: Colors.white54,
                                 fontSize: 14.0,

@@ -1,3 +1,4 @@
+import 'package:first_app/snow_effect.dart';
 import 'package:flutter/material.dart';
 import 'services.dart';
 import 'dart:async';
@@ -5,11 +6,23 @@ import 'user.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:progress_hud/progress_hud.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   final uidController = TextEditingController();
   final pwdController = TextEditingController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool _isRunning = false;
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -19,7 +32,14 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          new Container(
+          Container(
+            child: Container(
+              child: SnowWidget(
+                isRunning: _isRunning,
+                totalSnow: 150,
+                speed: 1,
+              ),
+            ),
             decoration: new BoxDecoration(
                 image: new DecorationImage(
               image: new AssetImage("images/road2.jpg"),
@@ -48,13 +68,19 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
               child: Column(
                 children: <Widget>[
-                  Text("Wanderlust Login",
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        fontFamily: "Raleway",
-                        letterSpacing: .6,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  InkWell(
+                    onDoubleTap: () {
+                      _isRunning = !_isRunning;
+                      setState(() {});
+                    },
+                    child: Text("Wanderlust Login",
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          fontFamily: "Raleway",
+                          letterSpacing: .6,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
                   SizedBox(
                     height: 30.0,
                   ),
@@ -102,7 +128,8 @@ class LoginPage extends StatelessWidget {
                   Align(
                     alignment: Alignment.center,
                     child: InkWell(
-                      onTap: () => Navigator.of(context).pushNamed("/ForgotPasswordPage"),
+                      onTap: () => Navigator.of(context)
+                          .pushNamed("/ForgotPasswordPage"),
                       child: Text("Forgot password?",
                           style: TextStyle(
                             color: Color(0xFFe5a900),

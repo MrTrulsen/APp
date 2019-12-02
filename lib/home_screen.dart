@@ -176,6 +176,9 @@ class _HomeScreenState extends State<HomeScreen> {
             if (_currentTab == 2) {
               Navigator.of(context).pushNamed("/MyProfilePage");
             }
+            if(_currentTab == 1){
+              Navigator.of(context).pushNamed("/FavoritesPage");
+            }
           });
         },
         items: [

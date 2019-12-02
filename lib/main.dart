@@ -1,3 +1,4 @@
+import 'package:first_app/favorites_screen.dart';
 import 'package:first_app/register_screen.dart';
 import 'package:first_app/maps.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ void main() => runApp(MaterialApp(
         "/MyProfilePage": (BuildContext context) => new MyProfileScreen(),
         "/RegisterPage": (BuildContext context) => new RegisterPage(),
         "/ForgotPasswordPage": (BuildContext context) => new ForgotPasswordPage(),
+        "/FavoritesPage": (BuildContext context) => new FavoritesScreen(),
       },
       debugShowCheckedModeBanner: false,
     ));

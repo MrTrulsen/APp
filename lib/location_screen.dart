@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:first_app/services.dart';
-import 'package:first_app/maps.dart';
-import 'package:first_app/models/activity_model.dart';
-import 'package:first_app/models/location_model.dart';
+import 'maps.dart';
+import 'models/activity_model.dart';
+import 'models/location_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'services.dart';
 
 class LocationScreen extends StatefulWidget {
   final Location location;
@@ -134,13 +134,13 @@ class _LocationScreenState extends State<LocationScreen> {
                       MaterialPageRoute(
                         builder: (_) => MyMap(
                           locationCoordinates: locat,
-                          location: widget.location,
+                          city: widget.location.city,
                         ),
                       ),
                     );
                   },
                   child: Icon(
-                    // TODO Bytte til map-marker-alt eller search location? 
+                    // TODO Bytte til map-marker-alt eller search location?
                     FontAwesomeIcons.route,
                     color: Colors.white,
                     size: 35.0,
@@ -262,5 +262,4 @@ class _LocationScreenState extends State<LocationScreen> {
       ),
     );
   }
-
 }
