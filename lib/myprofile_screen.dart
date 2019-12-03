@@ -130,8 +130,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             onTap: (int value) {
               setState(() {
                 _currentTab = value;
-                if (_currentTab == 2) {
+                if (_currentTab == 0) {
                   Navigator.of(context).pushNamed("/MyProfilePage");
+                }
+                if (_currentTab == 1) {
+                  Navigator.of(context).pushNamed("/FavoritesPage");
                 }
               });
             },

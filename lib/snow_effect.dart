@@ -69,21 +69,17 @@ class _SnowWidgetState extends State<SnowWidget>
   }
 
   update() {
-    print(" update" + widget.isRunning.toString());
+    //print(" update" + widget.isRunning.toString());
     angle += 0.01;
     if (_snows == null || widget.totalSnow != _snows.length) {
       _createSnow();
     }
     for (var i = 0; i < widget.totalSnow; i++) {
       var snow = _snows[i];
-      //We will add 1 to the cos function to prevent negative values which will lead flakes to move upwards
-      //Every particle has its own density which can be used to make the downward movement different for each flake
-      //Lets make it more random by adding in the radius
       snow.y += (cos(angle + snow.d) + 1 + snow.r / 2) * widget.speed;
       snow.x += sin(angle) * 2 * widget.speed;
       if (snow.x > W + 5 || snow.x < -5 || snow.y > H) {
         if (i % 3 > 0) {
-          //66.67% of the flakes
           _snows[i] =
               new Snow(x: _rnd.nextDouble() * W, y: -10, r: snow.r, d: snow.d);
         } else {
@@ -119,7 +115,6 @@ class _SnowWidgetState extends State<SnowWidget>
         return CustomPaint(
           willChange: widget.isRunning,
           painter: SnowPainter(
-              // progress: controller.value,
               isRunning: widget.isRunning,
               snows: _snows),
           size: Size.infinite,

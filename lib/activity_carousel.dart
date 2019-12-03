@@ -46,6 +46,7 @@ class ActivityCarousel extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (_) => ActvityScreen(
                       activity: activity,
+                      isFavorite: Services.isActivityFavorite(activity),
                     ),
                   ),
                 ),

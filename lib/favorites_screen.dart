@@ -19,13 +19,15 @@ class FavoritesScreenState extends State<FavoritesScreen> {
   int _currentTab = 0;
   Icon searchIcon = Icon(Icons.search);
   bool searching = false;
-  List<Activity> currentActivites = Services.activitiesToCity;
-  List<Activity> filteredActivites = Services.activitiesToCity;
+  List<Activity> currentActivites = Services.favoriteActivities;
+  List<Activity> filteredActivites = Services.favoriteActivities;
 
   @override
   void initState() {
     super.initState();
   }
+
+  void updateTable() {}
 
   Widget getSearchBar() {
     if (searching == true) {
@@ -60,7 +62,18 @@ class FavoritesScreenState extends State<FavoritesScreen> {
             leading: CircleAvatar(
               backgroundImage: AssetImage(activity.imageUrl),
             ),
-            trailing: Icon(FontAwesomeIcons.heart, color: Colors.red,),
+            trailing: GestureDetector(
+                onTap: () async {
+                  await Services.removeFavorite(
+                      Services.userLoggedIn, activity.name);
+                  setState(() {
+                    currentActivites = Services.favoriteActivities;
+                  });
+                },
+                child: Icon(
+                  FontAwesomeIcons.heart,
+                  color: Colors.red,
+                )),
             title: Text(activity.name),
             subtitle: Text(activity.type),
           );

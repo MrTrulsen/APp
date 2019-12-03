@@ -14,6 +14,7 @@ class Services {
   static List<Hotel> hotels = [];
   static List<Restaurant> restaurants = [];
   static List<Activity> activitiesToCity = [];
+  static List<Activity> favoriteActivities = [];
   static User userLoggedIn;
 
   static Future<User> login(String username, String password) async {
@@ -219,6 +220,66 @@ class Services {
     return true;
   }
 
+  static Future<bool> fetchFavorites(User user) async {
+    try {
+      final path = "/getFavorites";
+      final response = await http.get(
+        url + path,
+        headers: {HttpHeaders.authorizationHeader: "Bearer " + user.token},
+      );
+      if (response.statusCode == 200) {
+        final jsondata = json.decode(response.body);
+        for (var u in jsondata) {
+          Activity activity = Activity(
+              imageUrl: u["imageUrl"],
+              name: u["name"],
+              type: u["type"],
+              rating: u["rating"],
+              price: u["price"],
+              startTimes: u["startTimes"]);
+          favoriteActivities.add(activity);
+        }
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return true;
+  }
+
+  static Future<bool> removeFavorite(User user, String activity) async {
+    try {
+      final path = "/removeFavorites?activityName=" + activity;
+      final response = await http.delete(
+        url + path,
+        headers: {HttpHeaders.authorizationHeader: "Bearer " + user.token},
+      );
+      if (response.statusCode == 200) {
+        await updateFavorites(user);
+        return true;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return false;
+  }
+
+  static Future<bool> addFavorite(User user, String activity) async {
+    try {
+      final path = "/addFavorites?activityName=" + activity;
+      final response = await http.post(
+        url + path,
+        headers: {HttpHeaders.authorizationHeader: "Bearer " + user.token},
+      );
+      if (response.statusCode == 200) {
+        await updateFavorites(user);
+        return true;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    return false;
+  }
+
   static Future<String> fetchCurrentCity(User user) async {
     String currentCity = "";
     try {
@@ -337,6 +398,7 @@ class Services {
     hotels = [];
     restaurants = [];
     activitiesToCity = [];
+    favoriteActivities = [];
 
     try {
       final path = "/setCurrentCity?city=" + currentCity;
@@ -351,6 +413,7 @@ class Services {
         await Services.fetchHotels(userLoggedIn);
         await Services.fetchActivities(userLoggedIn);
         await Services.fetchRestaurants(userLoggedIn);
+        await Services.fetchFavorites(userLoggedIn);
         success = true;
         userLoggedIn.currentCity = currentCity;
         return success;
@@ -359,5 +422,20 @@ class Services {
       throw Exception(e.toString());
     }
     return success;
+  }
+
+  static Future<bool> updateFavorites(User user) async {
+    favoriteActivities = [];
+    await fetchFavorites(user);
+    return true;
+  }
+
+  static bool isActivityFavorite(Activity activity) {
+    for (int i = 0; i < favoriteActivities.length; i++) {
+      if (favoriteActivities[i].name == activity.name) {
+        return true;
+      }
+    }
+    return false;
   }
 }

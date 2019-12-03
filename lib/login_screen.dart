@@ -160,6 +160,7 @@ class _LoginPageState extends State<LoginPage>
                             var a = await Services.fetchLocations(user);
                             var b = await Services.fetchHotels(user);
                             var c = await Services.fetchActivities(user);
+                            var e = await Services.fetchFavorites(user);
                             var d = await Services.fetchRestaurants(user)
                                 .whenComplete(() => _scaffoldKey.currentState
                                     .hideCurrentSnackBar());

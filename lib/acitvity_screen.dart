@@ -1,3 +1,4 @@
+import 'package:first_app/services.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -5,8 +6,9 @@ import 'models/activity_model.dart';
 
 class ActvityScreen extends StatefulWidget {
   final Activity activity;
+  bool isFavorite;
 
-  ActvityScreen({this.activity});
+  ActvityScreen({this.activity, this.isFavorite});
 
   @override
   _ActvityScreenState createState() => _ActvityScreenState();
@@ -34,12 +36,15 @@ class _ActvityScreenState extends State<ActvityScreen> {
     return GestureDetector(
         onTap: () {
           setState(() {
-            if(selected == false){
-             _selected = true;
-             //TODO legg til i favoritter. 
-            }
-            else{
-              _selected = false;
+            if (selected == false) {
+              //Legge til som favoritt
+              Services.addFavorite(Services.userLoggedIn, widget.activity.name);
+              widget.isFavorite = true;
+            } else {
+              //Fjerne som favoritt
+              Services.removeFavorite(
+                  Services.userLoggedIn, widget.activity.name);
+              widget.isFavorite = false;
             }
           });
         },
@@ -49,9 +54,7 @@ class _ActvityScreenState extends State<ActvityScreen> {
           child: Icon(
             FontAwesomeIcons.heart,
             size: 25.0,
-            color: _selected == false
-                ? Colors.white
-                : Colors.red,
+            color: widget.isFavorite == false ? Colors.white : Colors.red,
           ),
         ));
   }
@@ -87,7 +90,7 @@ class _ActvityScreenState extends State<ActvityScreen> {
                     iconSize: 30.0,
                     onPressed: () => Navigator.pop(context),
                   ),
-                  _buildIconHeart(_selected)
+                  _buildIconHeart(widget.isFavorite)
                 ],
               ),
             ),
